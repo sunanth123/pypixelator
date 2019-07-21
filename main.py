@@ -2,6 +2,10 @@
 # import cv2
 from PIL import Image
 
+'''Import functions from other files'''
+from src.flip import flip
+from src.rotate import rotate
+from src.mirror import mirror
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -23,11 +27,11 @@ while menu == True:
     choice = raw_input("Please enter in the number of the feature : ")
 
     if choice == "1":
-        print("1")
+        flip()
     elif choice == "2":
-        print("2")
+        rotate()
     elif choice == "3":
-        print("3")
+        mirror()
     elif choice == "0":
         menu = False
 
@@ -41,7 +45,7 @@ print(pixels[30,30])
 '''
 Using size we can loop through all the pixels and manipulate them however we wish
 '''
-for x in range(350):
+for x in range(700):
     pixels[x, 30] = (0,0,0)
 
 
