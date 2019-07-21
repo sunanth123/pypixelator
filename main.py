@@ -1,6 +1,7 @@
 # Libraries that we will be using to work with pictures mainly to just read in images and work with their pixels.
 # import cv2
 from PIL import Image
+import numpy as np
 
 '''Import functions from other files'''
 from src.flip import flip
@@ -17,6 +18,13 @@ from src.mirror import mirror
 print("Image Alterer Version 0.0")
 imageFile = raw_input("Please specify the path to the image  you wish to alter: ")
 
+# im = Image.open('tests/testPhotos/beach.jpeg')
+im = Image.open(imageFile)
+size = im.size
+print(size);
+pixels = im.load()
+
+
 print("Here are the list of features available")
 menu = True
 while menu == True:
@@ -27,7 +35,7 @@ while menu == True:
     choice = raw_input("Please enter in the number of the feature : ")
 
     if choice == "1":
-        flip()
+        im = flip(pixels, size)
     elif choice == "2":
         rotate()
     elif choice == "3":
@@ -35,20 +43,14 @@ while menu == True:
     elif choice == "0":
         menu = False
 
-# im = Image.open('tests/testPhotos/beach.jpeg')
-im = Image.open(imageFile)
-size = im.size
-print(size);
-pixels = im.load()
-print(pixels[30,30])
-
 '''
 Using size we can loop through all the pixels and manipulate them however we wish
 '''
-for x in range(700):
-    pixels[x, 30] = (0,0,0)
-
-
+# for x in range(700):
+#     pixels[x, 30] = (0,0,0)
+# pixel_array = np.array(pixels, dtype=np.uint8)
+# final_image = Image.fromarray(pixel_array)
+# final_image.save("test.jpg")
 im.save("test.jpg")
 '''
 Have to install cv2 using pip install opencv-python

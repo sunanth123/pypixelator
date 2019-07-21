@@ -26,6 +26,7 @@ pip install Pillow
 Install image as well
 ```
 python -m pip install image
+python -m pip install numpy
 ```
 
 Run code
