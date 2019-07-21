@@ -8,8 +8,31 @@ from PIL import Image
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
+# Start of program. Describe what the program will do and then ask for a path for the image file
+# they want to alter.
+print("Image Alterer Version 0.0")
+imageFile = raw_input("Please specify the path to the image  you wish to alter: ")
 
-im = Image.open('tests/testPhotos/beach.jpeg')
+print("Here are the list of features available")
+menu = True
+while menu == True:
+    print("1 : Flip")
+    print("2 : Rotate")
+    print("3 : Mirror")
+    print("0 : Exit Program")
+    choice = raw_input("Please enter in the number of the feature : ")
+
+    if choice == "1":
+        print("1")
+    elif choice == "2":
+        print("2")
+    elif choice == "3":
+        print("3")
+    elif choice == "0":
+        menu = False
+
+# im = Image.open('tests/testPhotos/beach.jpeg')
+im = Image.open(imageFile)
 size = im.size
 print(size);
 pixels = im.load()
