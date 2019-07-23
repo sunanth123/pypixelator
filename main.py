@@ -37,7 +37,8 @@ while menu == True:
     if choice == "1":
         im = flip(pixels, size)
     elif choice == "2":
-        rotate()
+        choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
+        im = rotate(im,choice)
     elif choice == "3":
         mirror()
     elif choice == "0":
