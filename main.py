@@ -40,7 +40,7 @@ while menu == True:
         choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
         im = rotate(im,choice)
     elif choice == "3":
-        mirror()
+        im = mirror(im)
     elif choice == "0":
         menu = False
 
