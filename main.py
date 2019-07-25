@@ -7,6 +7,7 @@ import numpy as np
 from src.flip import flip
 from src.rotate import rotate
 from src.mirror import mirror
+from src.gray import gray
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -31,6 +32,7 @@ while menu == True:
     print("1 : Flip")
     print("2 : Rotate")
     print("3 : Mirror")
+    print("4 : GrayScale")
     print("0 : Exit Program")
     choice = raw_input("Please enter in the number of the feature : ")
 
@@ -41,6 +43,8 @@ while menu == True:
         im = rotate(im,choice)
     elif choice == "3":
         im = mirror(im)
+    elif choice == "4":
+        im = gray(im)
     elif choice == "0":
         menu = False
 
