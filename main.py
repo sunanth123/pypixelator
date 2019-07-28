@@ -2,6 +2,15 @@
 # import cv2
 from PIL import Image
 import numpy as np
+# import Tkinter as tk
+from Tkinter import *
+
+root = Tk()
+root.title('Image Alterer Version 0.0')
+Label(root, text='First Name').grid(row=0)
+e1= Entry(root)
+e1.grid(row=0, column=1)
+
 
 '''Import functions from other files'''
 from src.flip import flip
@@ -23,9 +32,9 @@ imageFile = raw_input("Please specify the path to the image  you wish to alter: 
 # im = Image.open('tests/testPhotos/beach.jpeg')
 im = Image.open(imageFile)
 size = im.size
-print(size);
 pixels = im.load()
 
+r.mainloop()
 
 print("Here are the list of features available")
 menu = True
