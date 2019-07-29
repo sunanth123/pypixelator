@@ -2,15 +2,8 @@
 # import cv2
 from PIL import Image
 import numpy as np
-# import Tkinter as tk
-from Tkinter import *
-
-root = Tk()
-root.title('Image Alterer Version 0.0')
-Label(root, text='First Name').grid(row=0)
-e1= Entry(root)
-e1.grid(row=0, column=1)
-
+import Tkinter as tk
+from Tkinter import Label, Tk, Button, Entry
 
 '''Import functions from other files'''
 from src.flip import flip
@@ -26,15 +19,48 @@ from src.enlarge import enlarge
 
 # Start of program. Describe what the program will do and then ask for a path for the image file
 # they want to alter.
-print("Image Alterer Version 0.0")
-imageFile = raw_input("Please specify the path to the image  you wish to alter: ")
+# print("Image Alterer Version 0.0")
+# imageFile = raw_input("Please specify the path to the image  you wish to alter: ")
 
-# im = Image.open('tests/testPhotos/beach.jpeg')
-im = Image.open(imageFile)
-size = im.size
-pixels = im.load()
 
-r.mainloop()
+def loadImage(path):
+    im = Image.open(path)
+    size = im.size
+    pixels = im.load()
+
+# im = Image.open(imageFile)
+# size = im.size
+# pixels = im.load()
+
+class gui(tk.Tk):
+
+
+    def __init__(self):
+        tk.Tk.__init__(self)
+        Label(self, text='File Path to Image').grid(row=0)
+        self.entry = tk.Entry(self)
+        self.entry.grid(row=0, column=1)
+        self.submitButton = tk.Button(self, text="Submit", command=self.loadImage)
+        self.submitButton.grid(row=0, column=2)
+
+    def loadImage(self):
+        print(self.entry.get())
+        self.im = Image.open(self.entry.get())
+        self.size = self.im.size
+        self.pixels = self.im.load()
+
+# root = Tk()
+# root.title('Image Alterer Version 0.0')
+# Label(root, text='File Path to Image').grid(row=0)
+# e1= Entry(root)
+# e1.grid(row=0, column=1)
+# submitButton = Button(root, text="Submit", command=loadImage("tests/testPhotos/beach.jpeg"))
+# submitButton.grid(row=0, column=2)
+# root.mainloop()
+startGUI = gui()
+# startGUI.loadImage("tests/testPhotos/beach.jpeg")
+startGUI.mainloop()
+
 
 print("Here are the list of features available")
 menu = True
