@@ -9,6 +9,7 @@ from src.rotate import rotate
 from src.mirror import mirror
 from src.gray import gray
 from src.enlarge import enlarge
+from src.crop import crop
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -35,6 +36,7 @@ while menu == True:
     print("3 : Mirror")
     print("4 : GrayScale")
     print("5 : Enlarge")
+    print("6 : Crop")
     print("0 : Exit Program")
     choice = raw_input("Please enter in the number of the feature : ")
 
@@ -49,6 +51,12 @@ while menu == True:
         im = gray(im)
     elif choice == "5":
         im = enlarge(im)
+    elif choice == "6":
+        xStart = int(raw_input("Choose starting x coordinant to crop: "))
+        xEnd = int(raw_input("Choose ending x coordinant to crop: "))
+        yStart = int(raw_input("Choose starting y coordinant to crop: "))
+        yEnd = int(raw_input("Choose ending y coordinant to crop: "))
+        im = crop(im,xStart, xEnd, yStart, yEnd)
     elif choice == "0":
         menu = False
 
