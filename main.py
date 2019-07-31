@@ -1,6 +1,6 @@
 # Libraries that we will be using to work with pictures mainly to just read in images and work with their pixels.
 # import cv2
-from PIL import Image
+from PIL import Image, ImageTk
 import numpy as np
 import Tkinter as tk
 from Tkinter import Label, Tk, Button, Entry
@@ -39,22 +39,26 @@ class gui(tk.Tk):
 
     def __init__(self):
         tk.Tk.__init__(self)
-        Label(self, text='File Path to Image').grid(row=0)
+        Label(self, text='Image Alterer',font="Times 20 bold").grid(row=0, column=3)
         self.winfo_toplevel().title("Image Alterer Version 0.1")
         self.winfo_toplevel().geometry("800x800")
         self.entry = tk.Entry(self)
-        self.entry.grid(row=0, column=1)
+        self.entry.grid(row=1, column=1)
         self.submitButton = tk.Button(self, text="Submit", command=self.loadImage)
-        self.submitButton.grid(row=0, column=2)
-        self.pictureWindow= tk.Canvas(self, width=300,height=300, bg="red")
-        self.pictureWindow.grid(row =0, column=3)
+        self.submitButton.grid(row=1, column=2)
+        self.pictureWindow = tk.Canvas(self, width=300,height=300, bg="black")
+        self.pictureWindow.create_text(150,150,fill="white",font="Times 20 italic bold", text="No Image Selected")
+        self.pictureWindow.grid(row =1, column=4)
 
 
     def loadImage(self):
         print(self.entry.get())
-        self.im = Image.open(self.entry.get())
-        self.size = self.im.size
-        self.pixels = self.im.load()
+        # self.im = Image.open(self.entry.get())
+        self.img= ImageTk.PhotoImage(Image.open(self.entry.get()))
+        self.pictureWindow.create_image(300,300, image=self.img)
+        # self.size = self.im.size
+        # self.pixels = self.im.load()
+
 
 
 # root = Tk()
