@@ -45,29 +45,35 @@ class gui(tk.Tk):
         Label(self, text='Enter in path to image below', font="Times 12 bold").grid(row=2, column=0, sticky='WS')
         self.entry = tk.Entry(self)
         self.entry.grid(row=3, column=0, sticky='WN')
-        self.submitButton = tk.Button(self, text="Submit", command=self.loadImage)
+        self.submitButton = tk.Button(self, text="Submit", command=self.loadInitialImage)
         self.submitButton.grid(row=4, column=0, sticky='WN')
         self.pictureWindow = tk.Canvas(self, width=600, height=300, bg="red")
         self.pictureWindow.create_text(300,150,fill="black",font="Times 20 italic bold", text="No Image Selected")
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
 
-    def loadImage(self):
+    def loadInitialImage(self):
         print(self.entry.get())
         self.im = Image.open(self.entry.get())
         self.img= ImageTk.PhotoImage(Image.open(self.entry.get()))
         self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
         self.loadChoices()
 
+    def loadImage(self):
+        self.img = ImageTk.PhotoImage(self.im)
+        self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
+
     def loadChoices(self):
         Label(self, text="Please Click on one of the choices below", font="Times 20 bold").grid(row=6, column=0,columnspan=8)
-        self.mirrorButton= tk.Button(self, text="Mirror").grid(row=7, column=0, sticky='N')
+        self.mirrorButton= tk.Button(self, text="Mirror", command=self.mirrorImage).grid(row=7, column=0, sticky='N')
         self.grayButton= tk.Button(self, text="GrayScale").grid(row=7, column=1, sticky='N')
         self.flipButton= tk.Button(self, text="Flip").grid(row=7, column=2, sticky='N')
         self.rotateButton= tk.Button(self, text="Rotate").grid(row=8, column=0, sticky='N')
         self.enlargeButton= tk.Button(self, text="Enlarge").grid(row=8, column=1, sticky='N')
         self.exitButton= tk.Button(self, text="Exit").grid(row=8, column=2, sticky='N')
 
-
+    def mirrorImage(self):
+        self.im = mirror(self.im)
+        self.loadImage()
 
 
 
