@@ -39,25 +39,35 @@ class gui(tk.Tk):
 
     def __init__(self):
         tk.Tk.__init__(self)
-        Label(self, text='Image Alterer',font="Times 20 bold").grid(row=0, column=3)
         self.winfo_toplevel().title("Image Alterer Version 0.1")
         self.winfo_toplevel().geometry("800x800")
+        Label(self, text='Image Alterer',font="Times 20 bold").grid(row=0, rowspan=2)
+        Label(self, text='Enter in path to image below', font="Times 12 bold").grid(row=2, column=0, sticky='WS')
         self.entry = tk.Entry(self)
-        self.entry.grid(row=1, column=1)
+        self.entry.grid(row=3, column=0, sticky='WN')
         self.submitButton = tk.Button(self, text="Submit", command=self.loadImage)
-        self.submitButton.grid(row=1, column=2)
-        self.pictureWindow = tk.Canvas(self, width=300,height=300, bg="black")
-        self.pictureWindow.create_text(150,150,fill="white",font="Times 20 italic bold", text="No Image Selected")
-        self.pictureWindow.grid(row =1, column=4)
-
+        self.submitButton.grid(row=4, column=0, sticky='WN')
+        self.pictureWindow = tk.Canvas(self, width=600, height=300, bg="red")
+        self.pictureWindow.create_text(300,150,fill="black",font="Times 20 italic bold", text="No Image Selected")
+        self.pictureWindow.grid(row=5, column=0, columnspan=10)
 
     def loadImage(self):
         print(self.entry.get())
-        # self.im = Image.open(self.entry.get())
+        self.im = Image.open(self.entry.get())
         self.img= ImageTk.PhotoImage(Image.open(self.entry.get()))
-        self.pictureWindow.create_image(300,300, image=self.img)
-        # self.size = self.im.size
-        # self.pixels = self.im.load()
+        self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
+        self.loadChoices()
+
+    def loadChoices(self):
+        Label(self, text="Please Click on one of the choices below", font="Times 20 bold").grid(row=6, column=0,columnspan=8)
+        self.mirrorButton= tk.Button(self, text="Mirror").grid(row=7, column=0, sticky='N')
+        self.grayButton= tk.Button(self, text="GrayScale").grid(row=7, column=1, sticky='N')
+        self.flipButton= tk.Button(self, text="Flip").grid(row=7, column=2, sticky='N')
+        self.rotateButton= tk.Button(self, text="Rotate").grid(row=8, column=0, sticky='N')
+        self.enlargeButton= tk.Button(self, text="Enlarge").grid(row=8, column=1, sticky='N')
+        self.exitButton= tk.Button(self, text="Exit").grid(row=8, column=2, sticky='N')
+
+
 
 
 
@@ -74,30 +84,30 @@ startGUI = gui()
 startGUI.mainloop()
 
 
-print("Here are the list of features available")
-menu = True
-while menu == True:
-    print("1 : Flip")
-    print("2 : Rotate")
-    print("3 : Mirror")
-    print("4 : GrayScale")
-    print("5 : Enlarge")
-    print("0 : Exit Program")
-    choice = raw_input("Please enter in the number of the feature : ")
-
-    if choice == "1":
-        im = flip(pixels, size)
-    elif choice == "2":
-        choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
-        im = rotate(im,choice)
-    elif choice == "3":
-        im = mirror(im)
-    elif choice == "4":
-        im = gray(im)
-    elif choice == "5":
-        im = enlarge(im)
-    elif choice == "0":
-        menu = False
+# print("Here are the list of features available")
+# menu = True
+# while menu == True:
+#     print("1 : Flip")
+#     print("2 : Rotate")
+#     print("3 : Mirror")
+#     print("4 : GrayScale")
+#     print("5 : Enlarge")
+#     print("0 : Exit Program")
+#     choice = raw_input("Please enter in the number of the feature : ")
+#
+#     if choice == "1":
+#         im = flip(pixels, size)
+#     elif choice == "2":
+#         choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
+#         im = rotate(im,choice)
+#     elif choice == "3":
+#         im = mirror(im)
+#     elif choice == "4":
+#         im = gray(im)
+#     elif choice == "5":
+#         im = enlarge(im)
+#     elif choice == "0":
+#         menu = False
 
 '''
 Using size we can loop through all the pixels and manipulate them however we wish
