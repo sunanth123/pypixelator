@@ -32,22 +32,30 @@ def loadImage(path):
 # size = im.size
 # pixels = im.load()
 
+#Class that will hold handle the GUI interface
+#An instance of this class will be created and from there the program will be started
+#All alterations to the image will be handled from this class
 class gui(tk.Tk):
-
 
     def __init__(self):
         tk.Tk.__init__(self)
         Label(self, text='File Path to Image').grid(row=0)
+        self.winfo_toplevel().title("Image Alterer Version 0.1")
+        self.winfo_toplevel().geometry("800x800")
         self.entry = tk.Entry(self)
         self.entry.grid(row=0, column=1)
         self.submitButton = tk.Button(self, text="Submit", command=self.loadImage)
         self.submitButton.grid(row=0, column=2)
+        self.pictureWindow= tk.Canvas(self, width=300,height=300, bg="red")
+        self.pictureWindow.grid(row =0, column=3)
+
 
     def loadImage(self):
         print(self.entry.get())
         self.im = Image.open(self.entry.get())
         self.size = self.im.size
         self.pixels = self.im.load()
+
 
 # root = Tk()
 # root.title('Image Alterer Version 0.0')
