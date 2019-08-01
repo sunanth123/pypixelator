@@ -11,6 +11,7 @@ from src.gray import gray
 from src.enlarge import enlarge
 from src.crop import crop
 from src.red import red
+from src.blue import blue
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -39,6 +40,7 @@ while menu == True:
     print("5 : Enlarge")
     print("6 : Crop")
     print("7 : RedScale")
+    print("8 : BlueScale")
     print("0 : Exit Program")
     choice = raw_input("Please enter in the number of the feature : ")
 
@@ -61,6 +63,8 @@ while menu == True:
         im = crop(im,xStart, xEnd, yStart, yEnd)
     elif choice == "7":
         im = red(im)
+    elif choice == "8":
+        im = blue(im)
     elif choice == "0":
         menu = False
 
