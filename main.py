@@ -94,8 +94,15 @@ class gui(tk.Tk):
         self.loadImage()
 
     def rotateImage(self):
-        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 20 bold").grid(row=5, column=11)
-#        self.rotateInputButton = tk.Button(self, text="Submit")
+        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 10 bold").grid(row=6, column=5)
+        self.rotateEntry = tk.Entry(self)
+        self.rotateEntry.grid(row=7, column=5)
+        self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate).grid(row=7, column=6)
+
+    def rotate(self):
+        print(self.rotateEntry.get())
+        self.im = rotate(self.im, int(self.rotateEntry.get()))
+        self.loadImage()
 
     def savePicture(self):
         self.im.save("Output.jpg")
