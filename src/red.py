@@ -18,6 +18,6 @@ def red(im):
         for x in range(size[0]):
             single_pixel=im.getpixel((x,y))
             gray = (single_pixel[0] + single_pixel[1] + single_pixel[2])/3
-            newImg.putpixel((x,y),(255,gray,0))
+            newImg.putpixel((x,y),(255,gray,gray))
 
     return newImg
