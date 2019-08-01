@@ -11,6 +11,11 @@ from src.rotate import rotate
 from src.mirror import mirror
 from src.gray import gray
 from src.enlarge import enlarge
+from src.crop import crop
+from src.red import red
+from src.blue import blue
+from src.green import green
+from src.jumble import jumble
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -74,8 +79,15 @@ class gui(tk.Tk):
         self.flipButton= tk.Button(self, text="Flip", command=self.flipImage).grid(row=7, column=2, sticky='N')
         self.rotateButton= tk.Button(self, text="Rotate", command=self.rotateImage).grid(row=8, column=0, sticky='N')
         self.enlargeButton= tk.Button(self, text="Enlarge", command=self.enlargeImage).grid(row=8, column=1, sticky='N')
-        self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=8, column=2, sticky='N')
-        self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=9, column=0, sticky='N')
+        #Need to finish Crop
+        self.cropButton= tk.Button(self, text="Crop").grid(row=8, column=2, sticky='N')
+
+        self.redButton= tk.Button(self, text="Red Scale", command=self.redImage).grid(row=9, column=0, sticky='N')
+        self.blueButton= tk.Button(self, text="Blue Scale", command=self.blueImage).grid(row=9, column=1, sticky='N')
+        self.greenButton= tk.Button(self, text="Green Scale", command=self.greenImage).grid(row=9, column=2, sticky='N')
+        self.jumbleButton= tk.Button(self, text="Jumble", command=self.jumbleImage).grid(row=10, column=0, sticky='N')
+        self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=10, column=1, sticky='N')
+        self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=10, column=2, sticky='N')
 
     def mirrorImage(self):
         self.im = mirror(self.im)
@@ -99,64 +111,60 @@ class gui(tk.Tk):
         self.rotateEntry.grid(row=7, column=5)
         self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate).grid(row=7, column=6)
 
-    def rotate(self):
+    def rotateImage(self):
         print(self.rotateEntry.get())
         self.im = rotate(self.im, int(self.rotateEntry.get()))
+        self.loadImage()
+
+    def redImage(self):
+        self.im = red(self.im)
+        self.loadImage()
+
+    def blueImage(self):
+        self.im = blue(self.im)
+        self.loadImage()
+
+    def greenImage(self):
+        self.im = green(self.im)
+        self.loadImage()
+
+    def jumbleImage(self):
+        self.im = jumble(self.im)
         self.loadImage()
 
     def savePicture(self):
         self.im.save("Output.jpg")
 
 
-# root = Tk()
-# root.title('Image Alterer Version 0.0')
-# Label(root, text='File Path to Image').grid(row=0)
-# e1= Entry(root)
-# e1.grid(row=0, column=1)
-# submitButton = Button(root, text="Submit", command=loadImage("tests/testPhotos/beach.jpeg"))
-# submitButton.grid(row=0, column=2)
-# root.mainloop()
 startGUI = gui()
-# startGUI.loadImage("tests/testPhotos/beach.jpeg")
 startGUI.mainloop()
 
-
-# print("Here are the list of features available")
-# menu = True
-# while menu == True:
-#     print("1 : Flip")
-#     print("2 : Rotate")
-#     print("3 : Mirror")
-#     print("4 : GrayScale")
-#     print("5 : Enlarge")
-#     print("0 : Exit Program")
-#     choice = raw_input("Please enter in the number of the feature : ")
-#
-#     if choice == "1":
-#         im = flip(pixels, size)
-#     elif choice == "2":
-#         choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
-#         im = rotate(im,choice)
-#     elif choice == "3":
-#         im = mirror(im)
-#     elif choice == "4":
-#         im = gray(im)
-#     elif choice == "5":
-#         im = enlarge(im)
-#     elif choice == "0":
-#         menu = False
-
 '''
-Using size we can loop through all the pixels and manipulate them however we wish
+    if choice == "1":
+        im = flip(pixels, size)
+    elif choice == "2":
+        choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
+        im = rotate(im,choice)
+    elif choice == "3":
+        im = mirror(im)
+    elif choice == "4":
+        im = gray(im)
+    elif choice == "5":
+        im = enlarge(im)
+    elif choice == "6":
+        xStart = int(raw_input("Choose starting x coordinant to crop: "))
+        xEnd = int(raw_input("Choose ending x coordinant to crop: "))
+        yStart = int(raw_input("Choose starting y coordinant to crop: "))
+        yEnd = int(raw_input("Choose ending y coordinant to crop: "))
+        im = crop(im,xStart, xEnd, yStart, yEnd)
+    elif choice == "7":
+        im = red(im)
+    elif choice == "8":
+        im = blue(im)
+    elif choice == "9":
+        im = green(im)
+    elif choice == "10":
+        im = jumble(im)
+    elif choice == "0":
+        menu = False
 '''
-# for x in range(700):
-#     pixels[x, 30] = (0,0,0)
-# pixel_array = np.array(pixels, dtype=np.uint8)
-# final_image = Image.fromarray(pixel_array)
-# final_image.save("test.jpg")
-# im.save("test.jpg")
-'''
-Have to install cv2 using pip install opencv-python
-and Pillow using pip install Pillow
-'''
-
