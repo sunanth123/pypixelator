@@ -13,6 +13,7 @@ from src.crop import crop
 from src.red import red
 from src.blue import blue
 from src.green import green
+from src.jumble import jumble
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -43,6 +44,7 @@ while menu == True:
     print("7 : RedScale")
     print("8 : BlueScale")
     print("9 : GreenScale")
+    print("10 : Jumble")
     print("0 : Exit Program")
     choice = raw_input("Please enter in the number of the feature : ")
 
@@ -69,6 +71,8 @@ while menu == True:
         im = blue(im)
     elif choice == "9":
         im = green(im)
+    elif choice == "10":
+        im = jumble(im)
     elif choice == "0":
         menu = False
 
