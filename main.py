@@ -52,14 +52,19 @@ class gui(tk.Tk):
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
 
     def loadInitialImage(self):
-        print(self.entry.get())
         self.im = Image.open(self.entry.get())
         self.img= ImageTk.PhotoImage(Image.open(self.entry.get()))
+        sizeOfNewImage = self.im.size
+        self.pictureWindow = tk.Canvas(self, width=sizeOfNewImage[0], height=sizeOfNewImage[1])
+        self.pictureWindow.grid(row=5, column=0, columnspan=10)
         self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
         self.loadChoices()
 
     def loadImage(self):
         self.img = ImageTk.PhotoImage(self.im)
+        sizeOfNewImage = self.im.size
+        self.pictureWindow = tk.Canvas(self, width=sizeOfNewImage[0], height=sizeOfNewImage[1])
+        self.pictureWindow.grid(row=5, column=0, columnspan=10)
         self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
 
     def loadChoices(self):
@@ -67,7 +72,7 @@ class gui(tk.Tk):
         self.mirrorButton= tk.Button(self, text="Mirror", command=self.mirrorImage).grid(row=7, column=0, sticky='N')
         self.grayButton= tk.Button(self, text="GrayScale", command=self.grayImage).grid(row=7, column=1, sticky='N')
         self.flipButton= tk.Button(self, text="Flip", command=self.flipImage).grid(row=7, column=2, sticky='N')
-        self.rotateButton= tk.Button(self, text="Rotate").grid(row=8, column=0, sticky='N')
+        self.rotateButton= tk.Button(self, text="Rotate", command=self.rotateImage).grid(row=8, column=0, sticky='N')
         self.enlargeButton= tk.Button(self, text="Enlarge", command=self.enlargeImage).grid(row=8, column=1, sticky='N')
         self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=8, column=2, sticky='N')
         self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=9, column=0, sticky='N')
@@ -87,6 +92,10 @@ class gui(tk.Tk):
     def enlargeImage(self):
         self.im = enlarge(self.im)
         self.loadImage()
+
+    def rotateImage(self):
+        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 20 bold").grid(row=5, column=11)
+#        self.rotateInputButton = tk.Button(self, text="Submit")
 
     def savePicture(self):
         self.im.save("Output.jpg")
