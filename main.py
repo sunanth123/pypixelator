@@ -65,16 +65,31 @@ class gui(tk.Tk):
     def loadChoices(self):
         Label(self, text="Please Click on one of the choices below", font="Times 20 bold").grid(row=6, column=0,columnspan=8)
         self.mirrorButton= tk.Button(self, text="Mirror", command=self.mirrorImage).grid(row=7, column=0, sticky='N')
-        self.grayButton= tk.Button(self, text="GrayScale").grid(row=7, column=1, sticky='N')
-        self.flipButton= tk.Button(self, text="Flip").grid(row=7, column=2, sticky='N')
+        self.grayButton= tk.Button(self, text="GrayScale", command=self.grayImage).grid(row=7, column=1, sticky='N')
+        self.flipButton= tk.Button(self, text="Flip", command=self.flipImage).grid(row=7, column=2, sticky='N')
         self.rotateButton= tk.Button(self, text="Rotate").grid(row=8, column=0, sticky='N')
-        self.enlargeButton= tk.Button(self, text="Enlarge").grid(row=8, column=1, sticky='N')
-        self.exitButton= tk.Button(self, text="Exit").grid(row=8, column=2, sticky='N')
+        self.enlargeButton= tk.Button(self, text="Enlarge", command=self.enlargeImage).grid(row=8, column=1, sticky='N')
+        self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=8, column=2, sticky='N')
+        self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=9, column=0, sticky='N')
 
     def mirrorImage(self):
         self.im = mirror(self.im)
         self.loadImage()
 
+    def grayImage(self):
+        self.im = gray(self.im)
+        self.loadImage()
+
+    def flipImage(self):
+        self.im = flip(self.im)
+        self.loadImage()
+
+    def enlargeImage(self):
+        self.im = enlarge(self.im)
+        self.loadImage()
+
+    def savePicture(self):
+        self.im.save("Output.jpg")
 
 
 # root = Tk()
@@ -123,8 +138,9 @@ Using size we can loop through all the pixels and manipulate them however we wis
 # pixel_array = np.array(pixels, dtype=np.uint8)
 # final_image = Image.fromarray(pixel_array)
 # final_image.save("test.jpg")
-im.save("test.jpg")
+# im.save("test.jpg")
 '''
 Have to install cv2 using pip install opencv-python
 and Pillow using pip install Pillow
 '''
+
