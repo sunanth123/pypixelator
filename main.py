@@ -45,12 +45,7 @@ class gui(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.winfo_toplevel().title("Image Alterer Version 0.1")
-        # self.winfo_toplevel().geometry("1000x1000")
         self.state('zoomed')
-        # self.vScroll = tk.Scrollbar(self, orient='vertical')
-        # self.vScroll.grid(row=0, column=12, sticky="NS")
-        # self.outerCanvas = tk.Canvas(self, width='800', height='800', scrollregion=(0,0,800,800), yscrollcommand=self.vScroll.set)
-        # self.vScroll.config(command=self.outerCanvas.yview)
         Label(self, text='Image Alterer',font="Times 20 bold").grid(row=0, rowspan=2)
         Label(self, text='Enter in path to image below', font="Times 12 bold").grid(row=2, column=0, sticky='WS')
         self.entry = tk.Entry(self)
@@ -123,15 +118,19 @@ class gui(tk.Tk):
         self.loadImage()
 
     def rotateImage(self):
-        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 10 bold").grid(row=8, column=5)
+        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 10 bold")
+        self.rotateInputLabel.grid(row=8, column=5)
         self.rotateEntry = tk.Entry(self)
-        self.rotateEntry.grid(row=8, column=5)
-        self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate).grid(row=8, column=6)
+        self.rotateEntry.grid(row=9, column=5)
+        self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate)
+        self.rotateInputButton.grid(row=9, column=6)
 
     def rotate(self):
-        print(self.rotateEntry.get())
         self.im = rotate(self.im, int(self.rotateEntry.get()))
         self.loadImage()
+        self.rotateInputLabel.grid_remove()
+        self.rotateEntry.grid_remove()
+        self.rotateInputButton.grid_remove()
 
     def redImage(self):
         self.im = red(self.im)
@@ -153,35 +152,6 @@ class gui(tk.Tk):
         self.im.save("Output.jpg")
 
 
+
 startGUI = gui()
 startGUI.mainloop()
-
-'''
-    if choice == "1":
-        im = flip(pixels, size)
-    elif choice == "2":
-        choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
-        im = rotate(im,choice)
-    elif choice == "3":
-        im = mirror(im)
-    elif choice == "4":
-        im = gray(im)
-    elif choice == "5":
-        im = enlarge(im)
-    elif choice == "6":
-        xStart = int(raw_input("Choose starting x coordinant to crop: "))
-        xEnd = int(raw_input("Choose ending x coordinant to crop: "))
-        yStart = int(raw_input("Choose starting y coordinant to crop: "))
-        yEnd = int(raw_input("Choose ending y coordinant to crop: "))
-        im = crop(im,xStart, xEnd, yStart, yEnd)
-    elif choice == "7":
-        im = red(im)
-    elif choice == "8":
-        im = blue(im)
-    elif choice == "9":
-        im = green(im)
-    elif choice == "10":
-        im = jumble(im)
-    elif choice == "0":
-        menu = False
-'''
