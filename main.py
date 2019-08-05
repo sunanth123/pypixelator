@@ -45,7 +45,8 @@ class gui(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.winfo_toplevel().title("Image Alterer Version 0.1")
-        self.winfo_toplevel().geometry("800x800")
+        # self.winfo_toplevel().geometry("1000x1000")
+        self.state('zoomed')
         # self.vScroll = tk.Scrollbar(self, orient='vertical')
         # self.vScroll.grid(row=0, column=12, sticky="NS")
         # self.outerCanvas = tk.Canvas(self, width='800', height='800', scrollregion=(0,0,800,800), yscrollcommand=self.vScroll.set)
@@ -122,10 +123,10 @@ class gui(tk.Tk):
         self.loadImage()
 
     def rotateImage(self):
-        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 10 bold").grid(row=6, column=5)
+        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 10 bold").grid(row=8, column=5)
         self.rotateEntry = tk.Entry(self)
-        self.rotateEntry.grid(row=7, column=5)
-        self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate).grid(row=7, column=6)
+        self.rotateEntry.grid(row=8, column=5)
+        self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate).grid(row=8, column=6)
 
     def rotate(self):
         print(self.rotateEntry.get())
