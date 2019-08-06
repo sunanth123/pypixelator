@@ -5,7 +5,7 @@ from PIL import Image
 def flip(im):
     #Create a new image first and then copy over the pixels in the flipped placements
     size = im.size
-    pixel = im.load()
+    pixels = im.load()
     newImg = Image.new('RGB', size, 0)
     newPixels = newImg.load()
 
