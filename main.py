@@ -14,6 +14,7 @@ from src.red import red
 from src.blue import blue
 from src.green import green
 from src.jumble import jumble
+from src.pixel import pixel
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -45,6 +46,7 @@ while menu == True:
     print("8 : BlueScale")
     print("9 : GreenScale")
     print("10 : Jumble")
+    print("11 : pixelate")
     print("0 : Exit Program")
     choice = raw_input("Please enter in the number of the feature : ")
 
@@ -73,6 +75,13 @@ while menu == True:
         im = green(im)
     elif choice == "10":
         im = jumble(im)
+    elif choice == "11":
+        factor = int(raw_input("Choose pixel factor 1-5: "))
+        xStart = int(raw_input("Choose starting x coordinant to pixelate: "))
+        xEnd = int(raw_input("Choose ending x coordinant to pixelate: "))
+        yStart = int(raw_input("Choose starting y coordinant to pixelate: "))
+        yEnd = int(raw_input("Choose ending y coordinant to pixelate: "))
+        im = pixel(im,factor,xStart, xEnd, yStart, yEnd)
     elif choice == "0":
         menu = False
 
