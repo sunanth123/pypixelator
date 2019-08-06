@@ -17,6 +17,7 @@ from src.red import red
 from src.blue import blue
 from src.green import green
 from src.jumble import jumble
+from src.pixel import pixel
 
 
 fileDir = os.path.dirname(os.path.abspath(__file__))
@@ -52,15 +53,15 @@ class Test(unittest.TestCase):
         test = ImageChops.difference(im,testim).getbbox()
         self.assertEqual(test,None)
 
-    # def test_flip(self):
-    #     print("\nStarting flip test")
-    #     im = Image.open(fileDir + "/tests/testPhotos/beach.jpeg")
-    #     testim = Image.open(fileDir + "/tests/testPhotos/test_flip.jpg")
-    #     im = flip(im)
-    #     im.save("test.jpg")
-    #     im = Image.open("test.jpg")
-    #     test = ImageChops.difference(im,testim).getbbox()
-    #     self.assertEqual(test,None)
+    def test_flip(self):
+        print("\nStarting flip test")
+        im = Image.open(fileDir + "/tests/testPhotos/beach.jpeg")
+        testim = Image.open(fileDir + "/tests/testPhotos/test_flip.jpg")
+        im = flip(im)
+        im.save("test.jpg")
+        im = Image.open("test.jpg")
+        test = ImageChops.difference(im,testim).getbbox()
+        self.assertEqual(test,None)
 
     def test_gray(self):
         print("\nStarting gray scale test")
@@ -132,6 +133,25 @@ class Test(unittest.TestCase):
         test = ImageChops.difference(im,testim).getbbox()
         self.assertEqual(test,None)
 
+    def test_pixelateall(self):
+        print("\nStarting pixelate all test")
+        im = Image.open(fileDir + "/tests/testPhotos/beach.jpeg")
+        testim = Image.open(fileDir + "/tests/testPhotos/test_pixelall.jpg")
+        im = pixel(im,3,0,875,0,350)
+        im.save("test.jpg")
+        im = Image.open("test.jpg")
+        test = ImageChops.difference(im,testim).getbbox()
+        self.assertEqual(test,None)
+
+    def test_pixelateportion(self):
+        print("\nStarting pixelate portion test")
+        im = Image.open(fileDir + "/tests/testPhotos/beach.jpeg")
+        testim = Image.open(fileDir + "/tests/testPhotos/test_pixelportion.jpg")
+        im = pixel(im,3,0,200,0,200)
+        im.save("test.jpg")
+        im = Image.open("test.jpg")
+        test = ImageChops.difference(im,testim).getbbox()
+        self.assertEqual(test,None)
 
 
 if __name__ == '__main__':
