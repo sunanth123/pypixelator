@@ -16,6 +16,7 @@ from src.red import red
 from src.blue import blue
 from src.green import green
 from src.jumble import jumble
+from src.pixel import pixel
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -92,8 +93,7 @@ class gui(tk.Tk):
         self.rotateButton= tk.Button(self, text="Rotate", command=self.rotateImage).grid(row=9, column=0, sticky='N')
         self.enlargeButton= tk.Button(self, text="Enlarge", command=self.enlargeImage).grid(row=9, column=1, sticky='N')
         #Need to finish Crop
-        self.cropButton= tk.Button(self, text="Crop").grid(row=9, column=2, sticky='N')
-
+        self.cropButton= tk.Button(self, text="Crop", command=self.cropImage).grid(row=9, column=2, sticky='N')
         self.redButton= tk.Button(self, text="Red Scale", command=self.redImage).grid(row=10, column=0, sticky='N')
         self.blueButton= tk.Button(self, text="Blue Scale", command=self.blueImage).grid(row=10, column=1, sticky='N')
         self.greenButton= tk.Button(self, text="Green Scale", command=self.greenImage).grid(row=10, column=2, sticky='N')
@@ -103,7 +103,50 @@ class gui(tk.Tk):
         self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=12, column=0, sticky='N')
 
     def pixleImage(self):
-        print("needs to be added")
+        self.pixelInputLabel = tk.Label(self, text="Please Enter in the dimensions and factor of the area you want to pixelate")
+        self.pixelInputLabel.grid(row=8, column=5)
+        self.pixelEntryXStartLabel = tk.Label(self, text="X start")
+        self.pixelEntryXStartLabel.grid(row=9, column=5)
+        self.pixelEntryXStart = tk.Entry(self)
+        self.pixelEntryXStart.grid(row=9, column=6)
+
+        self.pixelEntryXEndLabel = tk.Label(self, text="X end  ")
+        self.pixelEntryXEndLabel.grid(row=10, column=5)
+        self.pixelEntryXEnd = tk.Entry(self)
+        self.pixelEntryXEnd.grid(row=10, column=6)
+
+        self.pixelEntryYStartLabel = tk.Label(self, text="Y start")
+        self.pixelEntryYStartLabel.grid(row=11, column=5)
+        self.pixelEntryYStart = tk.Entry(self)
+        self.pixelEntryYStart.grid(row=11, column=6)
+
+        self.pixelEntryYEndLabel = tk.Label(self, text="Y end")
+        self.pixelEntryYEndLabel.grid(row=12, column=5)
+        self.pixelEntryYEnd = tk.Entry(self)
+        self.pixelEntryYEnd.grid(row=12, column=6)
+
+        self.pixelFactorLabel = tk.Label(self, text="Enter 1-5 for how pixelated you want the image")
+        self.pixelFactorEntry = tk.Entry(self)
+        self.pixelFactorEntry.grid(row=13, column=5)
+
+        self.pixelInputButton = tk.Button(self, text="Submit", command=self.pixel)
+        self.pixelInputButton.grid(row=14, column=6)
+
+    def pixel(self):
+        self.im = pixel(self.im, int(self.pixelFactorEntry.get()),int(self.pixelEntryXStart.get()),int(self.pixelEntryXEnd.get()),int(self.pixelEntryYStart.get()),int(self.pixelEntryYEnd.get()))
+        self.loadImage()
+        self.pixelInputLabel.grid_remove()
+        self.pixelEntryXStartLabel.grid_remove()
+        self.pixelEntryYStartLabel.grid_remove()
+        self.pixelEntryXEndLabel.grid_remove()
+        self.pixelEntryYEndLabel.grid_remove()
+        self.pixelEntryXStart.grid_remove()
+        self.pixelEntryYStart.grid_remove()
+        self.pixelEntryXEnd.grid_remove()
+        self.pixelEntryYEnd.grid_remove()
+        self.pixelInputButton.grid_remove()
+        self.pixelFactorEntry.grid_remove()
+        self.pixelFactorLabel.grid_remove()
 
     def mirrorImage(self):
         self.im = mirror(self.im)
@@ -137,7 +180,7 @@ class gui(tk.Tk):
         self.rotateInputButton.grid_remove()
 
     def cropImage(self):
-        self.cropInputLabel = tk.Label(self, text="Please Enter in the dimensions of the are you want to crop")
+        self.cropInputLabel = tk.Label(self, text="Please Enter in the dimensions of the area you want to crop")
         self.cropInputLabel.grid(row=8, column=5)
         self.cropEntryXStartLabel = tk.Label(self, text="X start")
         self.cropEntryXStartLabel.grid(row=9, column=5)
