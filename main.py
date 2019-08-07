@@ -56,6 +56,9 @@ class gui(tk.Tk):
         self.pictureWindow = tk.Canvas(self, width=600, height=300, bg="red")
         self.pictureWindow.create_text(300,150,fill="black",font="Times 20 italic bold", text="No Image Selected")
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
+        self.errorMessage = tk.Label(self, text="Invalid input please try again")
+        self.errorMessage.grid(row=4, column=4)
+        self.errorMessage.grid_remove()
 
     def loadInitialImage(self):
         self.im = Image.open(self.entry.get())
@@ -144,7 +147,14 @@ class gui(tk.Tk):
         self.pixelInputButton.grid(row=14, column=6)
 
     def pixel(self):
-        self.im = pixel(self.im, int(self.pixelFactorEntry.get()),int(self.pixelEntryXStart.get()),int(self.pixelEntryXEnd.get()),int(self.pixelEntryYStart.get()),int(self.pixelEntryYEnd.get()))
+        #self.im = pixel(self.im, int(self.pixelFactorEntry.get()),int(self.pixelEntryXStart.get()),int(self.pixelEntryXEnd.get()),int(self.pixelEntryYStart.get()),int(self.pixelEntryYEnd.get()))
+        result = pixel(self.im, int(self.pixelFactorEntry.get()),int(self.pixelEntryXStart.get()),int(self.pixelEntryXEnd.get()),int(self.pixelEntryYStart.get()),int(self.pixelEntryYEnd.get()))
+        if(result == None):
+            print("ERR")
+            self.errorMessage.grid()
+        else:
+            self.im = result
+
         self.loadImage()
         self.pixelInputLabel.grid_remove()
         self.pixelEntryXStartLabel.grid_remove()
