@@ -70,6 +70,11 @@ class gui(tk.Tk):
         self.hScroll.config(command=self.pictureWindow.xview)
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
         self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
+        self.pictureSizeLabel = tk.Label(self, text="Dimensions of current Image")
+        self.pictureSizeLabel.grid(row=3, column=3)
+        sizePrint = '(' + str(sizeOfNewImage[0]) + ', ' + str(sizeOfNewImage[1]) + ')'
+        self.pictureSize = tk.Label(self, text=sizePrint)
+        self.pictureSize.grid(row=4, column=3)
         self.loadChoices()
 
     def loadImage(self):
@@ -84,6 +89,11 @@ class gui(tk.Tk):
         self.hScroll.config(command=self.pictureWindow.xview)
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
         self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
+        self.pictureSizeLabel = tk.Label(self, text="Dimensions of current Image")
+        self.pictureSizeLabel.grid(row=3, column=3)
+        sizePrint = '(' + str(sizeOfNewImage[0]) + ', ' + str(sizeOfNewImage[1]) + ')'
+        self.pictureSize = tk.Label(self, text=sizePrint)
+        self.pictureSize.grid(row=4, column=3)
 
     def loadChoices(self):
         Label(self, text="Please Click on one of the choices below", font="Times 20 bold").grid(row=7, column=0,columnspan=8)
@@ -102,7 +112,7 @@ class gui(tk.Tk):
         self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=11, column=2, sticky='N')
         self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=12, column=0, sticky='N')
 
-    def pixleImage(self):
+    def pixelImage(self):
         self.pixelInputLabel = tk.Label(self, text="Please Enter in the dimensions and factor of the area you want to pixelate")
         self.pixelInputLabel.grid(row=8, column=5)
         self.pixelEntryXStartLabel = tk.Label(self, text="X start")
@@ -125,9 +135,10 @@ class gui(tk.Tk):
         self.pixelEntryYEnd = tk.Entry(self)
         self.pixelEntryYEnd.grid(row=12, column=6)
 
-        self.pixelFactorLabel = tk.Label(self, text="Enter 1-5 for how pixelated you want the image")
+        self.pixelFactorLabel = tk.Label(self, text="Enter 1-5, based on how pixelated you want it")
+        self.pixelFactorLabel.grid(row=13, column=5)
         self.pixelFactorEntry = tk.Entry(self)
-        self.pixelFactorEntry.grid(row=13, column=5)
+        self.pixelFactorEntry.grid(row=13, column=6)
 
         self.pixelInputButton = tk.Button(self, text="Submit", command=self.pixel)
         self.pixelInputButton.grid(row=14, column=6)
