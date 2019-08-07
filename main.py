@@ -98,8 +98,12 @@ class gui(tk.Tk):
         self.blueButton= tk.Button(self, text="Blue Scale", command=self.blueImage).grid(row=10, column=1, sticky='N')
         self.greenButton= tk.Button(self, text="Green Scale", command=self.greenImage).grid(row=10, column=2, sticky='N')
         self.jumbleButton= tk.Button(self, text="Jumble", command=self.jumbleImage).grid(row=11, column=0, sticky='N')
-        self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=11, column=1, sticky='N')
-        self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=11, column=2, sticky='N')
+        self.pixelButton = tk.Button(self, text="Pixelate", command=self.pixelImage).grid(row=11, column=1, sticky='N')
+        self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=11, column=2, sticky='N')
+        self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=12, column=0, sticky='N')
+
+    def pixleImage(self):
+        print("needs to be added")
 
     def mirrorImage(self):
         self.im = mirror(self.im)
@@ -131,6 +135,9 @@ class gui(tk.Tk):
         self.rotateInputLabel.grid_remove()
         self.rotateEntry.grid_remove()
         self.rotateInputButton.grid_remove()
+
+    def cropImage(self):
+        print("N")
 
     def redImage(self):
         self.im = red(self.im)
