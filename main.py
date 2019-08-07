@@ -137,7 +137,45 @@ class gui(tk.Tk):
         self.rotateInputButton.grid_remove()
 
     def cropImage(self):
-        print("N")
+        self.cropInputLabel = tk.Label(self, text="Please Enter in the dimensions of the are you want to crop")
+        self.cropInputLabel.grid(row=8, column=5)
+        self.cropEntryXStartLabel = tk.Label(self, text="X start")
+        self.cropEntryXStartLabel.grid(row=9, column=5)
+        self.cropEntryXStart = tk.Entry(self)
+        self.cropEntryXStart.grid(row=9, column=6)
+
+        self.cropEntryXEndLabel = tk.Label(self, text="X end  ")
+        self.cropEntryXEndLabel.grid(row=10, column=5)
+        self.cropEntryXEnd = tk.Entry(self)
+        self.cropEntryXEnd.grid(row=10, column=6)
+
+        self.cropEntryYStartLabel = tk.Label(self, text="Y start")
+        self.cropEntryYStartLabel.grid(row=11, column=5)
+        self.cropEntryYStart = tk.Entry(self)
+        self.cropEntryYStart.grid(row=11, column=6)
+
+        self.cropEntryYEndLabel = tk.Label(self, text="Y end")
+        self.cropEntryYEndLabel.grid(row=12, column=5)
+        self.cropEntryYEnd = tk.Entry(self)
+        self.cropEntryYEnd.grid(row=12, column=6)
+
+        self.cropInputButton = tk.Button(self, text="Submit", command=self.crop)
+        self.cropInputButton.grid(row=13, column=6)
+
+    def crop(self):
+        self.im = crop(self.im, int(self.cropEntryXStart.get()),int(self.cropEntryXEnd.get()),int(self.cropEntryYStart.get()),int(self.cropEntryYEnd.get()))
+        self.loadImage()
+        self.cropInputLabel.grid_remove()
+        self.cropEntryXStartLabel.grid_remove()
+        self.cropEntryYStartLabel.grid_remove()
+        self.cropEntryXEndLabel.grid_remove()
+        self.cropEntryYEndLabel.grid_remove()
+        self.cropEntryXStart.grid_remove()
+        self.cropEntryYStart.grid_remove()
+        self.cropEntryXEnd.grid_remove()
+        self.cropEntryYEnd.grid_remove()
+        self.cropInputButton.grid_remove()
+
 
     def redImage(self):
         self.im = red(self.im)
