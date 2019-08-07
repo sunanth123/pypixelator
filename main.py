@@ -45,7 +45,7 @@ class gui(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.winfo_toplevel().title("Image Alterer Version 0.1")
-        self.state('zoomed')
+        self.state('normal')
         Label(self, text='Image Alterer',font="Times 20 bold").grid(row=0, rowspan=2)
         Label(self, text='Enter in path to image below', font="Times 12 bold").grid(row=2, column=0, sticky='WS')
         self.entry = tk.Entry(self)
