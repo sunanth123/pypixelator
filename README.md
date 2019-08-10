@@ -24,7 +24,6 @@ python -m pip install Pillow
 Install [image](https://pillow.readthedocs.io/en/3.1.x/reference/Image.html)
 ```
 python -m pip install image
-python -m pip install numpy
 ```
 Install [numpy](https://www.numpy.org/)
 ```
@@ -37,6 +36,8 @@ python main.py
 
 ## How it works
 A graphic user interface should pop up with an entry box for the path to the image and a submit button. Enter in the path to your image and click the submit button to see your image pop up on the screen. The choices on how to alter your image will also pop up below your picture, click on one of the options to apply that to your image, in some cases you will be asked for extra information on how/where you would like the altercation to take place. For example, rotate will need to know if you want to rotate your image 90, 180, or 270 degrees. Finally if you are satisfied with your image you can click on the save button which will save your file as Output.jpg in the current directory and then you can click the exit button to end the program.
+
+![alt text](https://github.com/sunanth123/pypixelator/blob/readMe/src/images/readmeImage.PNG)
 
 ## To Do
 pypixelator is still only in its first version and a lot of work still needs to be done. There are a couple of issues which have been made on github to explain some of them. A more detailed list will be displayed below.
