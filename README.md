@@ -31,7 +31,7 @@ python -m pip install numpy
 ```
 Run main file on command line
 ```
-python main.py
+python pypixelator.py
 ```
 
 ## How it works
