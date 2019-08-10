@@ -13,15 +13,15 @@ def pixel(im,factor,xStart,xEnd,yStart,yEnd):
     ## check if dimensions are valid, if not return same image back
     if xStart > xEnd or yStart > yEnd:
         print("Invalid pixelate dimensions given")
-        return im
+        return None
 
     if xEnd > size[0] or yEnd > size[1]:
         print("Invalid pixelate dimensions given")
-        return im
+        return None
 
     if factor < 1 or factor > 5:
         print("Invalid pixelation value, choose from 1-5")
-        return im
+        return None
 
     for y in range(size[1]):
         for x in range(size[0]):

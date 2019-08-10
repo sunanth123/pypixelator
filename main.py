@@ -16,6 +16,7 @@ from src.red import red
 from src.blue import blue
 from src.green import green
 from src.jumble import jumble
+from src.pixel import pixel
 #
 # img = cv2.imread("tests/testPhotos/beach.jpeg")
 # cv2.imshow('image', img)
@@ -45,7 +46,7 @@ class gui(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.winfo_toplevel().title("Image Alterer Version 0.1")
-        self.winfo_toplevel().geometry("800x800")
+        self.state('normal')
         Label(self, text='Image Alterer',font="Times 20 bold").grid(row=0, rowspan=2)
         Label(self, text='Enter in path to image below', font="Times 12 bold").grid(row=2, column=0, sticky='WS')
         self.entry = tk.Entry(self)
@@ -55,39 +56,118 @@ class gui(tk.Tk):
         self.pictureWindow = tk.Canvas(self, width=600, height=300, bg="red")
         self.pictureWindow.create_text(300,150,fill="black",font="Times 20 italic bold", text="No Image Selected")
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
+        self.errorMessage = tk.Label(self, text="Invalid input please try again")
+        self.errorMessage.grid(row=4, column=4)
+        self.errorMessage.grid_remove()
 
     def loadInitialImage(self):
         self.im = Image.open(self.entry.get())
         self.img= ImageTk.PhotoImage(Image.open(self.entry.get()))
         sizeOfNewImage = self.im.size
-        self.pictureWindow = tk.Canvas(self, width=sizeOfNewImage[0], height=sizeOfNewImage[1])
+        self.vScroll = tk.Scrollbar(self, orient='vertical')
+        self.vScroll.grid(row=5, column=12, sticky="NS")
+        self.hScroll = tk.Scrollbar(self, orient='horizontal')
+        self.hScroll.grid(row=6, column=0, columnspan=10, sticky="WE")
+        self.pictureWindow = tk.Canvas(self, width=800, height=500, scrollregion=(0,0,sizeOfNewImage[0], sizeOfNewImage[1]), yscrollcommand=self.vScroll.set, xscrollcommand=self.hScroll.set)
+        self.vScroll.config(command=self.pictureWindow.yview)
+        self.hScroll.config(command=self.pictureWindow.xview)
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
         self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
+        self.pictureSizeLabel = tk.Label(self, text="Dimensions of current Image")
+        self.pictureSizeLabel.grid(row=3, column=3)
+        sizePrint = '(' + str(sizeOfNewImage[0]) + ', ' + str(sizeOfNewImage[1]) + ')'
+        self.pictureSize = tk.Label(self, text=sizePrint)
+        self.pictureSize.grid(row=4, column=3)
         self.loadChoices()
 
     def loadImage(self):
         self.img = ImageTk.PhotoImage(self.im)
         sizeOfNewImage = self.im.size
-        self.pictureWindow = tk.Canvas(self, width=sizeOfNewImage[0], height=sizeOfNewImage[1])
+        self.vScroll = tk.Scrollbar(self, orient='vertical')
+        self.vScroll.grid(row=5, column=12, sticky="NS")
+        self.hScroll = tk.Scrollbar(self, orient='horizontal')
+        self.hScroll.grid(row=6, column=0, columnspan=10, sticky="WE")
+        self.pictureWindow = tk.Canvas(self, width=800, height=500, scrollregion=(0,0,sizeOfNewImage[0], sizeOfNewImage[1]), yscrollcommand=self.vScroll.set, xscrollcommand=self.hScroll.set)
+        self.vScroll.config(command=self.pictureWindow.yview)
+        self.hScroll.config(command=self.pictureWindow.xview)
         self.pictureWindow.grid(row=5, column=0, columnspan=10)
         self.pictureWindow.create_image(0,0,image=self.img, anchor='nw')
+        self.pictureSizeLabel = tk.Label(self, text="Dimensions of current Image")
+        self.pictureSizeLabel.grid(row=3, column=3)
+        sizePrint = '(' + str(sizeOfNewImage[0]) + ', ' + str(sizeOfNewImage[1]) + ')'
+        self.pictureSize = tk.Label(self, text=sizePrint)
+        self.pictureSize.grid(row=4, column=3)
 
     def loadChoices(self):
-        Label(self, text="Please Click on one of the choices below", font="Times 20 bold").grid(row=6, column=0,columnspan=8)
-        self.mirrorButton= tk.Button(self, text="Mirror", command=self.mirrorImage).grid(row=7, column=0, sticky='N')
-        self.grayButton= tk.Button(self, text="GrayScale", command=self.grayImage).grid(row=7, column=1, sticky='N')
-        self.flipButton= tk.Button(self, text="Flip", command=self.flipImage).grid(row=7, column=2, sticky='N')
-        self.rotateButton= tk.Button(self, text="Rotate", command=self.rotateImage).grid(row=8, column=0, sticky='N')
-        self.enlargeButton= tk.Button(self, text="Enlarge", command=self.enlargeImage).grid(row=8, column=1, sticky='N')
+        Label(self, text="Please Click on one of the choices below", font="Times 20 bold").grid(row=7, column=0,columnspan=8)
+        self.mirrorButton= tk.Button(self, text="Mirror", command=self.mirrorImage).grid(row=8, column=0, sticky='N')
+        self.grayButton= tk.Button(self, text="GrayScale", command=self.grayImage).grid(row=8, column=1, sticky='N')
+        self.flipButton= tk.Button(self, text="Flip", command=self.flipImage).grid(row=8, column=2, sticky='N')
+        self.rotateButton= tk.Button(self, text="Rotate", command=self.rotateImage).grid(row=9, column=0, sticky='N')
+        self.enlargeButton= tk.Button(self, text="Enlarge", command=self.enlargeImage).grid(row=9, column=1, sticky='N')
         #Need to finish Crop
-        self.cropButton= tk.Button(self, text="Crop").grid(row=8, column=2, sticky='N')
+        self.cropButton= tk.Button(self, text="Crop", command=self.cropImage).grid(row=9, column=2, sticky='N')
+        self.redButton= tk.Button(self, text="Red Scale", command=self.redImage).grid(row=10, column=0, sticky='N')
+        self.blueButton= tk.Button(self, text="Blue Scale", command=self.blueImage).grid(row=10, column=1, sticky='N')
+        self.greenButton= tk.Button(self, text="Green Scale", command=self.greenImage).grid(row=10, column=2, sticky='N')
+        self.jumbleButton= tk.Button(self, text="Jumble", command=self.jumbleImage).grid(row=11, column=0, sticky='N')
+        self.pixelButton = tk.Button(self, text="Pixelate", command=self.pixelImage).grid(row=11, column=1, sticky='N')
+        self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=11, column=2, sticky='N')
+        self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=12, column=0, sticky='N')
 
-        self.redButton= tk.Button(self, text="Red Scale", command=self.redImage).grid(row=9, column=0, sticky='N')
-        self.blueButton= tk.Button(self, text="Blue Scale", command=self.blueImage).grid(row=9, column=1, sticky='N')
-        self.greenButton= tk.Button(self, text="Green Scale", command=self.greenImage).grid(row=9, column=2, sticky='N')
-        self.jumbleButton= tk.Button(self, text="Jumble", command=self.jumbleImage).grid(row=10, column=0, sticky='N')
-        self.saveButton= tk.Button(self, text="Save", command=self.savePicture).grid(row=10, column=1, sticky='N')
-        self.exitButton= tk.Button(self, text="Exit", command=self.destroy).grid(row=10, column=2, sticky='N')
+    def pixelImage(self):
+        self.pixelInputLabel = tk.Label(self, text="Please Enter in the dimensions and factor of the area you want to pixelate")
+        self.pixelInputLabel.grid(row=8, column=5)
+        self.pixelEntryXStartLabel = tk.Label(self, text="X start")
+        self.pixelEntryXStartLabel.grid(row=9, column=5)
+        self.pixelEntryXStart = tk.Entry(self)
+        self.pixelEntryXStart.grid(row=9, column=6)
+
+        self.pixelEntryXEndLabel = tk.Label(self, text="X end  ")
+        self.pixelEntryXEndLabel.grid(row=10, column=5)
+        self.pixelEntryXEnd = tk.Entry(self)
+        self.pixelEntryXEnd.grid(row=10, column=6)
+
+        self.pixelEntryYStartLabel = tk.Label(self, text="Y start")
+        self.pixelEntryYStartLabel.grid(row=11, column=5)
+        self.pixelEntryYStart = tk.Entry(self)
+        self.pixelEntryYStart.grid(row=11, column=6)
+
+        self.pixelEntryYEndLabel = tk.Label(self, text="Y end")
+        self.pixelEntryYEndLabel.grid(row=12, column=5)
+        self.pixelEntryYEnd = tk.Entry(self)
+        self.pixelEntryYEnd.grid(row=12, column=6)
+
+        self.pixelFactorLabel = tk.Label(self, text="Enter 1-5, based on how pixelated you want it")
+        self.pixelFactorLabel.grid(row=13, column=5)
+        self.pixelFactorEntry = tk.Entry(self)
+        self.pixelFactorEntry.grid(row=13, column=6)
+
+        self.pixelInputButton = tk.Button(self, text="Submit", command=self.pixel)
+        self.pixelInputButton.grid(row=14, column=6)
+
+    def pixel(self):
+        #self.im = pixel(self.im, int(self.pixelFactorEntry.get()),int(self.pixelEntryXStart.get()),int(self.pixelEntryXEnd.get()),int(self.pixelEntryYStart.get()),int(self.pixelEntryYEnd.get()))
+        result = pixel(self.im, int(self.pixelFactorEntry.get()),int(self.pixelEntryXStart.get()),int(self.pixelEntryXEnd.get()),int(self.pixelEntryYStart.get()),int(self.pixelEntryYEnd.get()))
+        if(result == None):
+            print("ERR")
+            self.errorMessage.grid()
+        else:
+            self.im = result
+
+        self.loadImage()
+        self.pixelInputLabel.grid_remove()
+        self.pixelEntryXStartLabel.grid_remove()
+        self.pixelEntryYStartLabel.grid_remove()
+        self.pixelEntryXEndLabel.grid_remove()
+        self.pixelEntryYEndLabel.grid_remove()
+        self.pixelEntryXStart.grid_remove()
+        self.pixelEntryYStart.grid_remove()
+        self.pixelEntryXEnd.grid_remove()
+        self.pixelEntryYEnd.grid_remove()
+        self.pixelInputButton.grid_remove()
+        self.pixelFactorEntry.grid_remove()
+        self.pixelFactorLabel.grid_remove()
 
     def mirrorImage(self):
         self.im = mirror(self.im)
@@ -106,15 +186,60 @@ class gui(tk.Tk):
         self.loadImage()
 
     def rotateImage(self):
-        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 10 bold").grid(row=6, column=5)
+        self.rotateInputLabel = tk.Label(self, text="Please enter either 90, 180, or 270", font="Time 10 bold")
+        self.rotateInputLabel.grid(row=8, column=5)
         self.rotateEntry = tk.Entry(self)
-        self.rotateEntry.grid(row=7, column=5)
-        self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate).grid(row=7, column=6)
+        self.rotateEntry.grid(row=9, column=5)
+        self.rotateInputButton = tk.Button(self, text="Submit", command=self.rotate)
+        self.rotateInputButton.grid(row=9, column=6)
 
-    def rotateImage(self):
-        print(self.rotateEntry.get())
+    def rotate(self):
         self.im = rotate(self.im, int(self.rotateEntry.get()))
         self.loadImage()
+        self.rotateInputLabel.grid_remove()
+        self.rotateEntry.grid_remove()
+        self.rotateInputButton.grid_remove()
+
+    def cropImage(self):
+        self.cropInputLabel = tk.Label(self, text="Please Enter in the dimensions of the area you want to crop")
+        self.cropInputLabel.grid(row=8, column=5)
+        self.cropEntryXStartLabel = tk.Label(self, text="X start")
+        self.cropEntryXStartLabel.grid(row=9, column=5)
+        self.cropEntryXStart = tk.Entry(self)
+        self.cropEntryXStart.grid(row=9, column=6)
+
+        self.cropEntryXEndLabel = tk.Label(self, text="X end  ")
+        self.cropEntryXEndLabel.grid(row=10, column=5)
+        self.cropEntryXEnd = tk.Entry(self)
+        self.cropEntryXEnd.grid(row=10, column=6)
+
+        self.cropEntryYStartLabel = tk.Label(self, text="Y start")
+        self.cropEntryYStartLabel.grid(row=11, column=5)
+        self.cropEntryYStart = tk.Entry(self)
+        self.cropEntryYStart.grid(row=11, column=6)
+
+        self.cropEntryYEndLabel = tk.Label(self, text="Y end")
+        self.cropEntryYEndLabel.grid(row=12, column=5)
+        self.cropEntryYEnd = tk.Entry(self)
+        self.cropEntryYEnd.grid(row=12, column=6)
+
+        self.cropInputButton = tk.Button(self, text="Submit", command=self.crop)
+        self.cropInputButton.grid(row=13, column=6)
+
+    def crop(self):
+        self.im = crop(self.im, int(self.cropEntryXStart.get()),int(self.cropEntryXEnd.get()),int(self.cropEntryYStart.get()),int(self.cropEntryYEnd.get()))
+        self.loadImage()
+        self.cropInputLabel.grid_remove()
+        self.cropEntryXStartLabel.grid_remove()
+        self.cropEntryYStartLabel.grid_remove()
+        self.cropEntryXEndLabel.grid_remove()
+        self.cropEntryYEndLabel.grid_remove()
+        self.cropEntryXStart.grid_remove()
+        self.cropEntryYStart.grid_remove()
+        self.cropEntryXEnd.grid_remove()
+        self.cropEntryYEnd.grid_remove()
+        self.cropInputButton.grid_remove()
+
 
     def redImage(self):
         self.im = red(self.im)
@@ -136,35 +261,6 @@ class gui(tk.Tk):
         self.im.save("Output.jpg")
 
 
+
 startGUI = gui()
 startGUI.mainloop()
-
-'''
-    if choice == "1":
-        im = flip(pixels, size)
-    elif choice == "2":
-        choice = int(raw_input("Choose what degree to rotate (90, 180, or 270): "))
-        im = rotate(im,choice)
-    elif choice == "3":
-        im = mirror(im)
-    elif choice == "4":
-        im = gray(im)
-    elif choice == "5":
-        im = enlarge(im)
-    elif choice == "6":
-        xStart = int(raw_input("Choose starting x coordinant to crop: "))
-        xEnd = int(raw_input("Choose ending x coordinant to crop: "))
-        yStart = int(raw_input("Choose starting y coordinant to crop: "))
-        yEnd = int(raw_input("Choose ending y coordinant to crop: "))
-        im = crop(im,xStart, xEnd, yStart, yEnd)
-    elif choice == "7":
-        im = red(im)
-    elif choice == "8":
-        im = blue(im)
-    elif choice == "9":
-        im = green(im)
-    elif choice == "10":
-        im = jumble(im)
-    elif choice == "0":
-        menu = False
-'''
