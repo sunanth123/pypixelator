@@ -24,7 +24,6 @@ python -m pip install Pillow
 Install [image](https://pillow.readthedocs.io/en/3.1.x/reference/Image.html)
 ```
 python -m pip install image
-python -m pip install numpy
 ```
 Install [numpy](https://www.numpy.org/)
 ```
