@@ -16,6 +16,11 @@ The idea for this program started with figuring out how to just pixelate an imag
 pypixelator works by leveraging a basic image library (pillow) that extracts dynamic images from different image files (i.e .png, .jpeg) and iterating through the respective pixels in order to alter the image as desired. The graphic user interface has been created using the Tkinter library in python.
 
 ## How to Build:
+Clone or Download this repository ony your machine
+```
+git clone https://github.com/sunanth123/pypixelator.git
+```
+
 Make sure to have a working version of Python and PIP (currently we are using Python 2.7)
 [Install PIP here](https://pip.pypa.io/en/stable/installing/)
 
