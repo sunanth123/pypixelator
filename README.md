@@ -3,6 +3,9 @@
 Caameron Nakasone and Sunanth Sakthivel</br>
 Copyright © 2019 Caameron Nakasone and Sunanth Sakthivel
 
+## User Documentation
+[USER DOCS](https://github.com/sunanth123/pypixelator/blob/master/User%20Documentation%20pypixelator.pdf)
+
 ## Description:
 pypixelator is a image altering program with a graphic user interface that has been written in Python.
 the user will be prompted with several different features to manipulate the image. Features include changing the size, color, contrast, adding effects, pixelating portions, rotation and much more. Moreover, the user will be given the opportunity to chain several of these features by selecting any number of modifications to the desired image. Everytime a modification is made on the image, the sample image will be shown. Once the user has selected all their choices, the final image will be provided for the user to checkout all the modifications made.
