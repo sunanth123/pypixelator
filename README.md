@@ -24,7 +24,11 @@ git clone https://github.com/sunanth123/pypixelator.git
 ```
 
 Make sure to have a working version of Python and PIP (currently we are using Python 2.7)
-[Install PIP here](https://pip.pypa.io/en/stable/installing/)
+
+[Download Python 2.7](https://www.python.org/download/releases/2.7/)
+
+[Install PIP](https://pip.pypa.io/en/stable/installing/)
+
 
 
 Install [pillow](https://pypi.org/project/Pillow/2.2.2/)
